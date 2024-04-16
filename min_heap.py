@@ -61,9 +61,9 @@ class MinHeap:
         left_child = 2 * i
         right_child = left_child + 1
 
-        value = self._lyst[i]
-        left_value = self._lyst[left_child] if left_child < len(self._lyst) else float('inf')
-        right_value = self._lyst[right_child] if right_child < len(self._lyst) else float('inf')
+        value = self._lyst[i].value
+        left_value = self._lyst[left_child].value if left_child < len(self._lyst) else float('inf')
+        right_value = self._lyst[right_child].value if right_child < len(self._lyst) else float('inf')
 
         if left_value < min(value, right_value):
             self._swap(i, left_child)
