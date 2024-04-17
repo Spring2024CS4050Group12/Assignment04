@@ -1,4 +1,18 @@
 from collections import namedtuple
+from functools import total_ordering
+
+
+@total_ordering
+class Extreme:
+    def __init__(self, lt):
+        self.lt = lt
+
+    def __lt__(self, other):
+        return self.lt
+
+
+VeryMost = Extreme(False)
+VeryLeast = Extreme(True)
 
 
 class MinHeap:
@@ -28,7 +42,7 @@ class MinHeap:
         # 1-indexing is easier and since we have to put something here anyway,
         # might as well use something that makes the bubble-up procedure
         # simpler :)
-        self._lyst = [self.Entry(object(), float('-inf'))]
+        self._lyst = [self.Entry(object(), VeryLeast)]
         self._mapping = {}
     
     def __len__(self):
@@ -62,8 +76,8 @@ class MinHeap:
         right_child = left_child + 1
 
         value = self._lyst[i].value
-        left_value = self._lyst[left_child].value if left_child < len(self._lyst) else float('inf')
-        right_value = self._lyst[right_child].value if right_child < len(self._lyst) else float('inf')
+        left_value = self._lyst[left_child].value if left_child < len(self._lyst) else VeryMost
+        right_value = self._lyst[right_child].value if right_child < len(self._lyst) else VeryMost
 
         if left_value < min(value, right_value):
             self._swap(i, left_child)
