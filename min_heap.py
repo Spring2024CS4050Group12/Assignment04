@@ -79,6 +79,7 @@ class MinHeap:
         i = len(self._lyst)
 
         self._lyst.append(self.Entry(key, value))
+        self._mapping[key] = i
 
         self._bubble_up(i)
 
@@ -90,12 +91,13 @@ class MinHeap:
             raise ValueError("Heap is empty!")
         
         if len(self) == 1:
-            return self._lyst.pop()
+            min_entry = self._lyst.pop()
+        else:
+            min_entry = self._lyst[1]
+            self._lyst[1] = self._lyst.pop()
+            self._percolate(1)
         
-        min_entry = self._lyst[1]
-        self._lyst[1] = self._lyst.pop()
-
-        self._percolate(1)
+        self._mapping.pop(min_entry.key)
 
         return min_entry
 
