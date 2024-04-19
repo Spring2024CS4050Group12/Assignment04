@@ -20,7 +20,7 @@ def get_mst(graph):
     total_weight = 0
     seen = {0}
 
-    # arbitrarily start with vertex 0
+    # start with vertex 0 per instructions
     for neighbor_weight, neighbor in graph[0]:
         heap.add(neighbor, (neighbor_weight, 0))
 
@@ -52,6 +52,7 @@ def main():
     print("Finding an MST for the following graph:")
     for i, outgoing_edges in enumerate(graph):
         print(f"Vertex {i + 1} is adjacent to: {', '.join(f'{destination + 1} (weight: {weight})' for (weight, destination) in outgoing_edges)}")
+    print()
     
     mst, total_weight = get_mst(graph)
     print("An MST for the graph above is as follows:")
