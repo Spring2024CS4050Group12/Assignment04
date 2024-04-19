@@ -46,12 +46,47 @@ def get_mst(graph):
     
     return tree, total_weight
 
+def printAdjacencyList(graph):
+    text = ""
+    text += "Input Graph in Adjacency Format:\n"
+
+    for i, edge in enumerate(graph):
+        text += f"Node {i + 1} is adjacent to:\n"
+        for vertex in edge:
+            text += f"\tNode {vertex[1] + 1} (weight: {vertex[0]})\n"
+
+    print(text)
+    with open('output.txt', 'a') as f:
+        f.write(text)
+        f.write("\n\n")
+
+
+def printMST(MST):
+    text = ""
+    text += "MST Edges & Weight:\n"
+
+    for i, node in enumerate(MST[0]):
+        text += f"\tEdge {i + 1}: From {node[0] + 1} to {node[1] + 1} (weight {node[2]})\n"
+    text += f"\nTotal weight of MST is: {MST[1]}"
+
+    print(text)
+    with open('output.txt', 'a') as f:
+        f.write(text)
+
 def main():
+    open('output.txt', 'w').close()
     with open('graph') as f:
         graph = read_graph(f)
+
+    print("Loaded Graph")
+    printAdjacencyList(graph)
     
+    print()
+
     mst = get_mst(graph)
-    print(mst)
+
+    print("Calculated MST")
+    printMST(mst)
 
 if __name__ == '__main__':
     main()
