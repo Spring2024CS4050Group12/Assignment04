@@ -18,11 +18,11 @@ def get_mst(graph):
     heap = MinHeap()
     tree = []  # list of edges
     total_weight = 0
-    seen = set()
+    seen = {0}
 
-    # arbitrarily start with whichever vertex came first in the graph
-    # key is the destination vertex, value is the weight and the source vertex
-    heap.add(0, (0, 0))
+    # arbitrarily start with vertex 0
+    for neighbor_weight, neighbor in graph[0]:
+        heap.add(neighbor, (neighbor_weight, 0))
 
     while len(heap) > 0:
         destination, (weight, source) = heap.pop()
@@ -42,7 +42,6 @@ def get_mst(graph):
                 heap.decrease_value(neighbor, outgoing_edge)
             else:
                 heap.add(neighbor, outgoing_edge)
-        
     
     return tree, total_weight
 
@@ -50,8 +49,16 @@ def main():
     with open('graph') as f:
         graph = read_graph(f)
     
-    mst = get_mst(graph)
-    print(mst)
+    print("Finding an MST for the following graph:")
+    for i, outgoing_edges in enumerate(graph):
+        print(f"Vertex {i + 1} is adjacent to: {', '.join(f'{destination + 1} (weight: {weight})' for (weight, destination) in outgoing_edges)}")
+    
+    mst, total_weight = get_mst(graph)
+    print("An MST for the graph above is as follows:")
+    for source, destination, weight in mst:
+        print(f"{source + 1} to {destination + 1} (weight {weight})")
+    
+    print(f"With a total cost of {total_weight}")
 
 if __name__ == '__main__':
     main()
